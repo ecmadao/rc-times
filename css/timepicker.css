@@ -13,16 +13,33 @@
   width: var(--timerWidth);
 }
 
+.scrollSection {
+  height: calc(3 * var(--timerHeight));
+  width: var(--timerWidth);
+  position: relative;
+}
+
 .container {
   height: calc(3 * var(--timerHeight));
   position: relative;
-  background-color: #e2e2e2;
   width: var(--timerWidth);
   overflow-y: scroll;
 }
 
 .container::-webkit-scrollbar {
  display: none;
+}
+
+.timerWrapper {
+  position: absolute;
+  width: calc(var(--timerWidth) - 2px);
+  height: var(--timerHeight);
+  top: var(--timerHeight);
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
 }
 
 .wrapper {
@@ -57,15 +74,15 @@
   color: #212529;
 }
 
-.scrollSection {
+.timer {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.scrollSection:not(:first-child) {
-  margin-left: 20px;
+.timer:not(:first-child) {
+  margin-left: 30px;
 }
 
 .unit {

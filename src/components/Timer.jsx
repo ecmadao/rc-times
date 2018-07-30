@@ -77,16 +77,19 @@ class Timer extends React.Component {
     const { times, unit } = this.props;
 
     return (
-      <div className="scrollSection">
-        <div
-          className="container"
-          ref={ref => (this.dom = ref)}
-        >
+      <div className="timer">
+        <div className="scrollSection">
           <div
-            className="wrapper"
+            className="container"
+            ref={ref => (this.dom = ref)}
           >
-            {this.renderTimes(times)}
+            <div
+              className="wrapper"
+            >
+              {this.renderTimes(times)}
+            </div>
           </div>
+          <div className="timerWrapper" />
         </div>
         <div className="unit">{unit}</div>
       </div>

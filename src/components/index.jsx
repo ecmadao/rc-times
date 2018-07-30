@@ -77,14 +77,20 @@ TimePicker.defaultProps = {
     //   activeIndex: 0
     // },
     {
-      times: timesCreator(12),
+      step: 1,
+      from: 0,
+      to: 24,
       unit: 'H',
-      activeIndex: 7
+      activeIndex: 7,
+      times: timesCreator(12),
     },
     {
-      times: timesCreator(60),
+      step: 1,
+      from: 0,
+      to: 24,
       unit: 'Min',
-      activeIndex: 7
+      activeIndex: 7,
+      times: timesCreator(60),
     }
   ],
   onTimeChange: Function.prototype
