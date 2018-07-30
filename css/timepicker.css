@@ -1,0 +1,74 @@
+
+:root {
+  --timerHeight: 50px;
+  --timerWidth: 65px;
+}
+
+.timePicker {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: calc(3 * var(--timerHeight));
+  width: var(--timerWidth);
+}
+
+.container {
+  height: calc(3 * var(--timerHeight));
+  position: relative;
+  background-color: #e2e2e2;
+  width: var(--timerWidth);
+  overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+ display: none;
+}
+
+.wrapper {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  transition: top 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.time {
+  opacity: 0.4;
+  cursor: pointer;
+  width: var(--timerWidth);
+  height: var(--timerHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  color: #495057;
+  transition: transform 0.2s, opacity 0.2s, color 0.2s;
+}
+
+.time:hover {
+  opacity: 1;
+}
+
+.timeActived {
+  opacity: 1;
+  font-weight: bolder;
+  transform: scale(1.5);
+  color: #212529;
+}
+
+.scrollSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.scrollSection:not(:first-child) {
+  margin-left: 20px;
+}
+
+.unit {
+  margin-left: 10px;
+  color: #495057;
+}
