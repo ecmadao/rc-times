@@ -6,8 +6,6 @@ import Timer from './Timer';
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
-    console.log('constructor');
-    console.log(props.sections);
     this.state = {
       activeIndexs: props.sections.map(section => section.activeIndex || 0)
     };
@@ -17,9 +15,6 @@ class TimePicker extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { sections } = nextProps;
     const { activeIndexs } = this.state;
-    console.log('componentWillReceiveProps');
-    console.log(sections);
-    console.log(activeIndexs);
     const tmp = activeIndexs.map(activeIndex => ({ activeIndex }));
     if (!matchArray(sections, tmp, 'activeIndex')) {
       this.init(sections);
@@ -65,8 +60,9 @@ class TimePicker extends React.Component {
   }
 
   render() {
+    const { color } = this.props;
     return (
-      <div className="timePicker">
+      <div className={`timePicker ${color}`}>
         {this.renderTimers()}
       </div>
     );
@@ -79,21 +75,24 @@ TimePicker.defaultProps = {
       step: 1,
       from: 0,
       to: 24,
-      unit: 'H',
       length: 0,
-      activeIndex: 7,
       times: [],
+      prefix: '',
+      suffix: 'H',
+      activeIndex: 0,
     },
     {
       step: 1,
       from: 0,
       to: 24,
-      unit: 'Min',
       length: 0,
-      activeIndex: 7,
       times: [],
+      prefix: '',
+      suffix: 'Min',
+      activeIndex: 0,
     }
   ],
+  color: 'dark',
   onTimeChange: Function.prototype
 };
 

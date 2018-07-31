@@ -1,7 +1,7 @@
 {
   "name": "rc-times",
   "version": "0.0.1",
-  "description": "",
+  "description": "A flexable and multi-purpose react time picker",
   "main": "index.js",
   "scripts": {
     "babel": "babel ./src --out-dir ./lib",
@@ -15,7 +15,6 @@
     "postversion": "git commit package.json -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish --registry=https://registry.npmjs.org/",
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
     "pretest": "npm run --silent eslint",
-    "scratch": "test/components/TwelveHoursTheme_spec.jsx",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook-deploy": "npm i && npm run storybook-pro && npm run deploy-storybook",
     "storybook-pro": "build-storybook -c .storybook -o .out",

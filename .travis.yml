@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "7"
+  - "6"
+before_script:
+  - npm install -g mocha
+  - npm install -g eslint
+  - npm i
+  - npm i react
+  - npm i react-dom
+script: npm test
+env:
+  - REACT=16
+bundler_args: --retry 2
+matrix:
+  fast_finish: true
+cache:
+  directories:
+    - node_modules
+after_script:
+    - npm run coveralls
+notifications:
+  slack: ecmadao:fKFA5rnMSWRUqZrA9bS3gaD2
