@@ -2,7 +2,6 @@
 import { expect } from 'chai';
 import * as helper from '../src/utils/helper';
 
-
 describe('Utils test', () => {
   describe('matchArray test', () => {
     it('Should match array successfully', () => {
