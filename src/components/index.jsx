@@ -1,11 +1,13 @@
 
 import React from 'react';
-import { timesCreator, matchArray } from '../utils/helper';
+import { matchArray } from '../utils/helper';
 import Timer from './Timer';
 
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
+    console.log('constructor');
+    console.log(props.sections);
     this.state = {
       activeIndexs: props.sections.map(section => section.activeIndex || 0)
     };
@@ -15,6 +17,9 @@ class TimePicker extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { sections } = nextProps;
     const { activeIndexs } = this.state;
+    console.log('componentWillReceiveProps');
+    console.log(sections);
+    console.log(activeIndexs);
     const tmp = activeIndexs.map(activeIndex => ({ activeIndex }));
     if (!matchArray(sections, tmp, 'activeIndex')) {
       this.init(sections);
@@ -29,7 +34,7 @@ class TimePicker extends React.Component {
 
   onTimeChange(index) {
     const { activeIndexs } = this.state;
-    const { onTimeChange } = this.state;
+    const { onTimeChange } = this.props;
     return (activeIndex) => {
       const newIndexs = [
         ...activeIndexs.slice(0, index),
@@ -51,8 +56,7 @@ class TimePicker extends React.Component {
       return (
         <Timer
           key={index}
-          unit={section.unit}
-          times={section.times}
+          section={section}
           activeIndex={activeIndexs[index]}
           onTimeChange={this.onTimeChange(index)}
         />
@@ -71,26 +75,23 @@ class TimePicker extends React.Component {
 
 TimePicker.defaultProps = {
   sections: [
-    // {
-    //   times: [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010],
-    //   unit: 'Year',
-    //   activeIndex: 0
-    // },
     {
       step: 1,
       from: 0,
       to: 24,
       unit: 'H',
+      length: 0,
       activeIndex: 7,
-      times: timesCreator(12),
+      times: [],
     },
     {
       step: 1,
       from: 0,
       to: 24,
       unit: 'Min',
+      length: 0,
       activeIndex: 7,
-      times: timesCreator(60),
+      times: [],
     }
   ],
   onTimeChange: Function.prototype

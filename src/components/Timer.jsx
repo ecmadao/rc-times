@@ -3,21 +3,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import { scrollTo } from '../utils/dom';
+import { timesCreator } from '../utils/helper';
 
 class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.timer = null;
-
     this.onScroll = this.onScroll.bind(this);
     this.onTimeChange = this.onTimeChange.bind(this);
   }
 
   componentDidMount() {
     const { activeIndex } = this.props;
-    if (ReactDOM.findDOMNode(this.dom)) {
-      ReactDOM.findDOMNode(this.dom).addEventListener('scroll', this.onScroll);
-      scrollTo(ReactDOM.findDOMNode(this.dom), (activeIndex - 1) * 50, 200);
+    const scroller = ReactDOM.findDOMNode(this.scroller);
+    if (scroller) {
+      if (scroller.addEventListener) {
+        scroller.addEventListener('scroll', this.onScroll, true);
+      } else {
+        scroller.attachEvent('scroll', this.onScroll);
+      }
+      scrollTo(scroller, (activeIndex - 1) * 50, 200);
+    }
+  }
+
+  componentWillUnmount() {
+    const scroller = ReactDOM.findDOMNode(this.scroller);
+    if (scroller) {
+      if (scroller.removeEventListener) {
+        scroller.removeEventListener('scroll', this.onScroll, true);
+      } else {
+        scroller.detachEvent('scroll', this.onScroll);
+      }
     }
   }
 
@@ -59,8 +75,8 @@ class Timer extends React.Component {
     onTimeChange && onTimeChange(activeIndex);
 
     this.timer = setTimeout(() => {
-      if (ReactDOM.findDOMNode(this.dom)) {
-        scrollTo(ReactDOM.findDOMNode(this.dom), last, 200);
+      if (ReactDOM.findDOMNode(this.scroller)) {
+        scrollTo(ReactDOM.findDOMNode(this.scroller), last, 200);
       }
     }, 150);
   }
@@ -68,25 +84,45 @@ class Timer extends React.Component {
   onTimeChange(activeIndex) {
     const { onTimeChange } = this.props;
     return () => {
-      scrollTo(ReactDOM.findDOMNode(this.dom), activeIndex * 50, 200);
+      scrollTo(ReactDOM.findDOMNode(this.scroller), activeIndex * 50, 200);
       onTimeChange && onTimeChange(activeIndex);
     };
   }
 
+  get times() {
+    const { section } = this.props;
+    const {
+      to,
+      from,
+      step,
+      times,
+      length
+    } = section;
+
+    if (times && Array.isArray(times) && times.length > 0) return times;
+    return timesCreator({
+      to,
+      from,
+      step,
+      length
+    });
+  }
+
   render() {
-    const { times, unit } = this.props;
+    const { section } = this.props;
+    const { unit } = section;
 
     return (
       <div className="timer">
         <div className="scrollSection">
           <div
             className="container"
-            ref={ref => (this.dom = ref)}
+            ref={ref => (this.scroller = ref)}
           >
             <div
               className="wrapper"
             >
-              {this.renderTimes(times)}
+              {this.renderTimes(this.times)}
             </div>
           </div>
           <div className="timerWrapper" />
