@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { matchArray } from '../utils/helper';
+import cx from 'classnames';
+import { matchArray, timesCreator } from '../utils/helper';
 import Timer from './Timer';
 
 class TimePicker extends React.Component {
@@ -39,30 +40,49 @@ class TimePicker extends React.Component {
       this.setState({
         activeIndexs: newIndexs
       });
-      onTimeChange && onTimeChange(newIndexs);
+      onTimeChange && onTimeChange({
+        indexs: newIndexs,
+        values: this.getValues(newIndexs)
+      });
     };
+  }
+
+  getValues(indexs) {
+    const { sections } = this.props;
+    const values = [];
+
+    for (let i = 0; i < sections.length; i += 1) {
+      const section = sections[i];
+      const times = timesCreator(section);
+      values.push(times[indexs[i]]);
+    }
+    return values;
   }
 
   renderTimers() {
     const { sections } = this.props;
     const { activeIndexs } = this.state;
 
-    return sections.map((section, index) => {
-      return (
-        <Timer
-          key={index}
-          section={section}
-          activeIndex={activeIndexs[index]}
-          onTimeChange={this.onTimeChange(index)}
-        />
-      );
-    })
+    return sections.map((section, index) => (
+      <Timer
+        key={index}
+        section={section}
+        activeIndex={activeIndexs[index]}
+        onTimeChange={this.onTimeChange(index)}
+      />
+    ));
   }
 
   render() {
-    const { color } = this.props;
+    const { color, className } = this.props;
     return (
-      <div className={`timePicker ${color}`}>
+      <div
+        className={cx(
+          'timePicker',
+          color ? `timePicker-${color}` : '',
+          className
+        )}
+      >
         {this.renderTimers()}
       </div>
     );
@@ -93,6 +113,7 @@ TimePicker.defaultProps = {
     }
   ],
   color: 'dark',
+  className: '',
   onTimeChange: Function.prototype
 };
 

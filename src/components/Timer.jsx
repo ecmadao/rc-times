@@ -65,21 +65,7 @@ class Timer extends React.Component {
 
   get times() {
     const { section } = this.props;
-    const {
-      to,
-      from,
-      step,
-      times,
-      length
-    } = section;
-
-    if (times && Array.isArray(times) && times.length > 0) return times;
-    return timesCreator({
-      to,
-      from,
-      step,
-      length
-    });
+    return timesCreator(section);
   }
 
   renderTimes(times) {

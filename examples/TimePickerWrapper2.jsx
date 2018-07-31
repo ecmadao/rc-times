@@ -31,7 +31,7 @@ class TimePickerWrapper extends React.Component {
                       suffix: 'Clock'
                     }
                   ]}
-                  color="green"
+                  color="yellow"
                 />
               </div>
             </div>

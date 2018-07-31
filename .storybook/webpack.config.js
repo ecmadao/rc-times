@@ -7,13 +7,13 @@ module.exports = {
   context: SOURCE_PATH,
   module: {
     rules: [
-      // {
-      //   test: /\.jsx?$/,
-      //   enforce: "pre",
-      //   loader: "eslint-loader",
-      //   exclude: /node_modules/,
-      //   include: SOURCE_PATH,
-      // },
+      {
+        test: /\.jsx?$/,
+        enforce: "pre",
+        loader: "eslint-loader",
+        exclude: /node_modules/,
+        include: SOURCE_PATH,
+      },
       {
         test:   /\.css/,
         loaders: ['style-loader', 'css-loader'],

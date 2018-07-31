@@ -1,5 +1,4 @@
 
-
 export const matchArray = (arrA, arrB, key) => {
   if (arrA.length !== arrB.length) return false;
   for (let i = 0; i < arrA.length; i += 1) {
@@ -9,16 +8,24 @@ export const matchArray = (arrA, arrB, key) => {
 };
 
 export const timesCreator = (options = {}) => {
-  const { from, to, length, step = 1 } = options;
+  const { from, to, length, times = [], step = 1 } = options;
+  if (times && Array.isArray(times) && times.length > 0) return times;
+
   const s = Math.max(1, step);
-
   if (length) {
-    return Array.from({ length }).map((_, i) => i + s);
+    return Array.from({ length }).reduce((arr, _) => {
+      arr.push(
+        arr.length
+          ? arr[arr.length - 1] + s
+          : (from || 0)
+      );
+      return arr;
+    }, []);
   }
 
-  const times = [];
+  const results = [];
   for (let i = from; i <= to; i += s) {
-    times.push(i);
+    results.push(i);
   }
-  return times;
+  return results;
 };

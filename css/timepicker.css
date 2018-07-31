@@ -114,58 +114,58 @@
 }
 
 /* ======================== handle color ======================== */
-.timePicker.dark .time {
+.timePicker.timePicker-dark .time {
   color: #495057;
 }
 
-.timePicker.red .time {
+.timePicker.timePicker-red .time {
   color: #f03e3e;
 }
 
-.timePicker.blue .time {
+.timePicker.timePicker-blue .time {
   color: #1c7ed6;
 }
 
-.timePicker.cyan .time {
+.timePicker.timePicker-cyan .time {
   color: #1098ad;
 }
 
-.timePicker.teal .time {
+.timePicker.timePicker-teal .time {
   color: #0ca678;
 }
 
-.timePicker.yellow .time {
+.timePicker.timePicker-yellow .time {
   color: #f59f00;
 }
 
-.timePicker.green .time {
+.timePicker.timePicker-green .time {
   color: #37b24d;
 }
 
-.timePicker.dark .timeActived {
+.timePicker.timePicker-dark .timeActived {
   color: #212529;
 }
 
-.timePicker.red .timeActived {
+.timePicker.timePicker-red .timeActived {
   color: #c92a2a;
 }
 
-.timePicker.blue .timeActived {
+.timePicker.timePicker-blue .timeActived {
   color: #1864ab;
 }
 
-.timePicker.cyan .timeActived {
+.timePicker.timePicker-cyan .timeActived {
   color: #0b7285;
 }
 
-.timePicker.teal .timeActived {
+.timePicker.timePicker-teal .timeActived {
   color: #087f5b;
 }
 
-.timePicker.yellow .timeActived {
+.timePicker.timePicker-yellow .timeActived {
   color: #e67700;
 }
 
-.timePicker.green .timeActived {
+.timePicker.timePicker-green .timeActived {
   color: #2b8a3e;
 }

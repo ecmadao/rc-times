@@ -20,8 +20,11 @@ class TimePickerWrapper extends React.Component {
     this.onTimeChange = this.onTimeChange.bind(this);
   }
 
-  onTimeChange(activeIndexs) {
-    const [yearIndex, monthIndex, dayIndex, ...others] = activeIndexs;
+  onTimeChange({ indexs, values }) {
+    console.log(indexs);
+    console.log(values);
+
+    const [yearIndex, monthIndex, dayIndex, ...others] = indexs;
     const dIndex = dayIndex >= this.getMonthDays(this.years[yearIndex], this.months[monthIndex])
       ? 0
       : dayIndex;
