@@ -1,6 +1,10 @@
 
 ## rc-times
 
+[![npm version](https://badge.fury.io/js/rc-times.svg)](https://badge.fury.io/js/rc-times) [![Build Status](https://travis-ci.org/ecmadao/rc-times.svg?branch=master)](https://travis-ci.org/ecmadao/rc-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/rc-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/rc-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![rc-times](http://img.shields.io/npm/dm/rc-times.svg)](https://www.npmjs.com/package/rc-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/rc-times/master/LICENSE)
+
+[![NPM](https://nodei.co/npm/rc-times.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/rc-times)
+
 > A flexible and multi-purpose react time picker. Depend on react, no jQuery rely.
 
 ### Screenshots
