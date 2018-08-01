@@ -1,6 +1,6 @@
 {
   "name": "rc-times",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A flexible and multi-purpose react time picker",
   "main": "index.js",
   "scripts": {
