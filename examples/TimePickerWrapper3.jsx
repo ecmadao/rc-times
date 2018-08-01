@@ -21,6 +21,7 @@ class TimePickerWrapper extends React.Component {
   }
 
   onTimeChange({ indexs, values }) {
+    console.log(' ==================== ')
     console.log(indexs);
     console.log(values);
 

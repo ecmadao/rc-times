@@ -1,42 +1,19 @@
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import cx from 'classnames';
-import { scrollTo } from '../utils/dom';
 import { timesCreator } from '../utils/helper';
+import Scroller from './lib/Scroller';
 
 class Timer extends React.Component {
   constructor(props) {
     super(props);
+
     this.timer = null;
     this.activedWidth = 50;
     this.actived = '';
     this.onScroll = this.onScroll.bind(this);
+    this.onScrollEnd = this.onScrollEnd.bind(this);
     this.onTimeChange = this.onTimeChange.bind(this);
-  }
-
-  componentDidMount() {
-    const { activeIndex } = this.props;
-    const scroller = ReactDOM.findDOMNode(this.scroller);
-    if (scroller) {
-      if (scroller.addEventListener) {
-        scroller.addEventListener('scroll', this.onScroll, true);
-      } else {
-        scroller.attachEvent('scroll', this.onScroll);
-      }
-      scrollTo(scroller, (activeIndex - 1) * 50, 200);
-    }
-  }
-
-  componentWillUnmount() {
-    const scroller = ReactDOM.findDOMNode(this.scroller);
-    if (scroller) {
-      if (scroller.removeEventListener) {
-        scroller.removeEventListener('scroll', this.onScroll, true);
-      } else {
-        scroller.detachEvent('scroll', this.onScroll);
-      }
-    }
+    this.onActicedChange = this.onActicedChange.bind(this);
   }
 
   get width() {
@@ -73,11 +50,8 @@ class Timer extends React.Component {
     const doms = times.map((time, index) => (
       <div
         key={index}
-        className={cx(
-          "time",
-          index === activeIndex && "timeActived"
-        )}
         onClick={this.onTimeChange(index)}
+        className={`time ${index === activeIndex ? 'timeActived' : ''}`}
       >
         {time}
       </div>
@@ -91,37 +65,32 @@ class Timer extends React.Component {
     return doms;
   }
 
-  onScroll(e) {
-    if (this.timer !== null) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-
-    const remain = e.srcElement.scrollTop % 50;
-    const main = e.srcElement.scrollTop - remain;
+  onActicedChange(position) {
+    const remain = position % 50;
+    const main = position - remain;
     const last = remain >= 25 ? main + 50 : main;
-
     const activeIndex = last / 50;
     const { onTimeChange } = this.props;
     onTimeChange && onTimeChange(activeIndex);
+  }
 
-    this.timer = setTimeout(() => {
-      if (ReactDOM.findDOMNode(this.scroller)) {
-        scrollTo(ReactDOM.findDOMNode(this.scroller), last, 200);
-      }
-    }, 150);
+  onScroll({ position }) {
+    this.onActicedChange(position);
+  }
+
+  onScrollEnd({ position }) {
+    this.onActicedChange(position);
   }
 
   onTimeChange(activeIndex) {
     const { onTimeChange } = this.props;
     return () => {
-      scrollTo(ReactDOM.findDOMNode(this.scroller), activeIndex * 50, 200);
       onTimeChange && onTimeChange(activeIndex);
     };
   }
 
   render() {
-    const { section } = this.props;
+    const { section, activeIndex } = this.props;
     const { prefix, suffix } = section;
     const width = this.width;
 
@@ -138,11 +107,16 @@ class Timer extends React.Component {
             className="container"
             ref={ref => (this.scroller = ref)}
           >
-            <div
+            <Scroller
+              autoFrame
               className="wrapper"
+              centerIndex={activeIndex}
+              onScroll={this.onScroll}
+              onScrollEnd={this.onScrollEnd}
+              scrollRef={ref => this.scroll = ref}
             >
               {this.renderTimes(this.times)}
-            </div>
+            </Scroller>
           </div>
           <div className="timerWrapper" style={{ width: `${width - 2}px` }} />
         </div>
@@ -150,6 +124,6 @@ class Timer extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default Timer;
