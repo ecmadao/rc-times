@@ -44,19 +44,22 @@ class TimePickerWrapper extends React.Component {
                   step: 2,
                   from: 0,
                   to: 24,
-                  suffix: 'H'
+                  suffix: 'H',
+                  activeIndex: 6,
                 },
                 {
                   step: 2,
                   from: 0,
                   to: 60,
-                  suffix: 'Min'
+                  suffix: 'Min',
+                  activeIndex: 7,
                 },
                 {
                   step: 2,
                   from: 0,
                   to: 60,
-                  suffix: 'Sec'
+                  suffix: 'Sec',
+                  activeIndex: 15,
                 }
               ]}
               color="red"

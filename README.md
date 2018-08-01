@@ -61,6 +61,9 @@ render() {
   ],
   color: 'dark',
   className: '',
+  padding: 0,
+  disable: false,
+  timerClassName: '',
   onTimeChange: Function.prototype
 }
 ```

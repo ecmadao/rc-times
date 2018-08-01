@@ -52,12 +52,20 @@ export default class Scroller extends Component {
     this.scrollToNextDebounced = debounce(250, true, this.scrollToNext);
   }
 
-  componentWillUnmount() {
-    this.deleteRef();
+  componentDidMount() {
+    const { centerIndex } = this.props;
+    const { children } = nodeChildrenToScrollState(this.node);
+    if (centerIndex > 0 && children[centerIndex]) {
+      this.scrollToPosition(children[centerIndex].start);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     this.updatePosition(nextProps);
+  }
+
+  componentWillUnmount() {
+    this.deleteRef();
   }
 
   updatePosition(nextProps) {
