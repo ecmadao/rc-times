@@ -58,7 +58,7 @@ class TimePicker extends React.Component {
   }
 
   renderTimers() {
-    const { sections } = this.props;
+    const { sections, timerClassName } = this.props;
     const { activeIndexs } = this.state;
 
     return sections.map((section, index) => (
@@ -66,6 +66,7 @@ class TimePicker extends React.Component {
         key={index}
         index={index}
         section={section}
+        className={timerClassName}
         activeIndex={activeIndexs[index]}
         onTimeChange={this.onTimeChange(index)}
       />
@@ -109,6 +110,7 @@ TimePicker.defaultProps = {
   ],
   color: 'dark',
   className: '',
+  timerClassName: '',
   onTimeChange: Function.prototype
 };
 

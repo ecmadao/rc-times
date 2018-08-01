@@ -21,16 +21,24 @@ class Timer extends React.Component {
     if (this.actived.length === activedTime.length) {
       return this.activedWidth;
     }
+    const { className } = this.props;
     const hiddenDOM = document.createElement('div');
-    hiddenDOM.setAttribute('class', 'timeActived timeHidden');
+    hiddenDOM.setAttribute('class', `timeActived ${className} timeHidden`);
     hiddenDOM.appendChild(document.createTextNode(activedTime));
-
     document.body.appendChild(hiddenDOM);
+
     let fontSize = window.getComputedStyle(hiddenDOM, null).getPropertyValue('font-size');
     fontSize = parseInt(fontSize, 10);
     fontSize = isNaN(fontSize) ? 16 : fontSize;
+
+    let paddingLeft = window.getComputedStyle(hiddenDOM, null).getPropertyValue('padding-left');
+    let paddingRight = window.getComputedStyle(hiddenDOM, null).getPropertyValue('padding-right');
+    paddingLeft = parseInt(paddingLeft, 10);
+    paddingRight = parseInt(paddingRight, 10);
+    const padding = Math.max(paddingLeft + paddingRight, 16);
+
     hiddenDOM.remove();
-    this.activedWidth = fontSize * activedTime.length + 16;
+    this.activedWidth = fontSize * activedTime.length + padding;
     this.actived = activedTime;
     return this.activedWidth;
   }
@@ -46,21 +54,21 @@ class Timer extends React.Component {
   }
 
   renderTimes(times) {
-    const { activeIndex } = this.props;
+    const { activeIndex, className } = this.props;
     const doms = times.map((time, index) => (
       <div
         key={index}
         onClick={this.onTimeChange(index)}
-        className={`time ${index === activeIndex ? 'timeActived' : ''}`}
+        className={`time ${index === activeIndex ? 'timeActived' : ''} ${className}`}
       >
         {time}
       </div>
     ));
     doms.unshift((
-      <div className="time timePlaceholder" key="placeholder-0"></div>
+      <div className={`time timePlaceholder ${className}`} key="placeholder-0" />
     ));
     doms.push((
-      <div className="time timePlaceholder" key={`placeholder-${times.length}`}></div>
+      <div className={`time timePlaceholder ${className}`} key={`placeholder-${times.length}`} />
     ));
     return doms;
   }

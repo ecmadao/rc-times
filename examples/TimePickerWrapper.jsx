@@ -77,6 +77,22 @@ class TimePickerWrapper extends React.Component {
           </div>
         </div>
 
+        <div className="exampleColumn">
+          <div className="exampleRow">
+            <h3>Send className/timerClassName props</h3>
+            <TimePicker
+              sections={[
+                {
+                  from: 0,
+                  to: 12,
+                  suffix: 'Hour'
+                }
+              ]}
+              color="teal"
+            />
+          </div>
+        </div>
+
       </div>
     );
   }
