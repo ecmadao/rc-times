@@ -9,6 +9,7 @@ export default class ScrollerContent extends Component {
   render() {
     const {
       scroll,
+      disable,
       className,
       scrollRef,
       autoScroll,
@@ -18,7 +19,7 @@ export default class ScrollerContent extends Component {
     const style = {
       height: '100%',
       width: '100%',
-      overflowY: autoScroll || scroll.touching ? 'hidden' : 'auto',
+      overflowY: disable || autoScroll || scroll.touching ? 'hidden' : 'auto',
     };
 
     return (

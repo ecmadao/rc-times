@@ -19,6 +19,10 @@
   transition: width 0.2s;
 }
 
+.timePicker.disable {
+  cursor: not-allowed;
+}
+
 .timePicker .container {
   height: calc(3 * var(--timerHeight));
   position: relative;
@@ -43,6 +47,10 @@
 }
 
 .timePicker .wrapper {
+}
+
+.timePicker .wrapper.disable {
+  overflow-y: hidden;
 }
 
 .timePicker .wrapper::-webkit-scrollbar {
@@ -95,6 +103,11 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.timePicker .time.disable {
+  opacity: 0.5 !important;
+  cursor: not-allowed;
 }
 
 .timePicker .timer:not(:first-child) {

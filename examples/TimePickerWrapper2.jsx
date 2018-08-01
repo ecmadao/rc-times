@@ -15,11 +15,12 @@ class TimePickerWrapper extends React.Component {
                 <TimePicker
                   sections={[
                     {
-                      prefix: 'Every',
-                      times: ['Day', 'Week', 'Month', 'Quarter', 'Year'],
+                      prefix: '每',
+                      times: ['三天', '周', '月', '季度'],
                     }
                   ]}
                   color="yellow"
+                  padding={20}
                 />
               </div>
               <div className="exampleSubText">at</div>
@@ -41,7 +42,7 @@ class TimePickerWrapper extends React.Component {
 
         <div className="exampleColumn">
           <div className="exampleRow">
-            <h3>With outside className propsto make it bigger</h3>
+            <h3>With outside props to make it bigger</h3>
             <div className="exampleColumn">
               <div className="exampleRow">
                 <TimePicker
@@ -52,6 +53,7 @@ class TimePickerWrapper extends React.Component {
                     }
                   ]}
                   color="yellow"
+                  padding={40}
                   className="examplePicker"
                   timerClassName="exampleTimer"
                 />

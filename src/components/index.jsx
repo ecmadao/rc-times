@@ -58,13 +58,20 @@ class TimePicker extends React.Component {
   }
 
   renderTimers() {
-    const { sections, timerClassName } = this.props;
+    const {
+      padding,
+      disable,
+      sections,
+      timerClassName
+    } = this.props;
     const { activeIndexs } = this.state;
 
     return sections.map((section, index) => (
       <Timer
         key={index}
         index={index}
+        disable={disable}
+        padding={padding}
         section={section}
         className={timerClassName}
         activeIndex={activeIndexs[index]}
@@ -74,10 +81,10 @@ class TimePicker extends React.Component {
   }
 
   render() {
-    const { color, className } = this.props;
+    const { color, disable, className } = this.props;
     return (
       <div
-        className={`timePicker ${color ? `timePicker-${color}` : ''} ${className}`}
+        className={`timePicker ${color ? `timePicker-${color}` : ''} ${disable && 'disable'} ${className}`}
       >
         {this.renderTimers()}
       </div>
@@ -108,8 +115,10 @@ TimePicker.defaultProps = {
       activeIndex: 0,
     }
   ],
+  padding: 0,
   color: 'dark',
   className: '',
+  disable: false,
   timerClassName: '',
   onTimeChange: Function.prototype
 };

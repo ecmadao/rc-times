@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { timesCreator } from '../utils/helper';
+import { timesCreator, getDomProperty } from '../utils/helper';
 import Scroller from './lib/Scroller';
 
 class Timer extends React.Component {
@@ -9,6 +9,7 @@ class Timer extends React.Component {
 
     this.timer = null;
     this.activedWidth = 50;
+    this.itemMinWidth = null;
     this.actived = '';
     this.onScroll = this.onScroll.bind(this);
     this.onScrollEnd = this.onScrollEnd.bind(this);
@@ -17,35 +18,41 @@ class Timer extends React.Component {
   }
 
   get width() {
-    const activedTime = this.activedTime;
+    const activedTime = `${this.activedItem}`;
     if (this.actived.length === activedTime.length) {
       return this.activedWidth;
     }
     const { className } = this.props;
-    const hiddenDOM = document.createElement('div');
-    hiddenDOM.setAttribute('class', `timeActived ${className} timeHidden`);
-    hiddenDOM.appendChild(document.createTextNode(activedTime));
-    document.body.appendChild(hiddenDOM);
+    const {
+      width,
+      margin,
+      padding,
+    } = getDomProperty(activedTime, className);
 
-    let fontSize = window.getComputedStyle(hiddenDOM, null).getPropertyValue('font-size');
-    fontSize = parseInt(fontSize, 10);
-    fontSize = isNaN(fontSize) ? 16 : fontSize;
-
-    let paddingLeft = window.getComputedStyle(hiddenDOM, null).getPropertyValue('padding-left');
-    let paddingRight = window.getComputedStyle(hiddenDOM, null).getPropertyValue('padding-right');
-    paddingLeft = parseInt(paddingLeft, 10);
-    paddingRight = parseInt(paddingRight, 10);
-    const padding = Math.max(paddingLeft + paddingRight, 16);
-
-    hiddenDOM.remove();
-    this.activedWidth = fontSize * activedTime.length + padding;
-    this.actived = activedTime;
+    this.activedWidth = width + margin + padding + this.props.padding;
     return this.activedWidth;
   }
 
-  get activedTime() {
+  get minWidth() {
+    if (this.itemMinWidth) return this.itemMinWidth;
+    const longestItem = this.longestItem;
+    const { width } = getDomProperty(longestItem);
+
+    this.itemMinWidth = width;
+    return this.itemMinWidth;
+  }
+
+  get activedItem() {
     const { activeIndex } = this.props;
     return this.times[activeIndex];
+  }
+
+  get longestItem() {
+    let result = '';
+    for (const item of this.times) {
+      if (result.length < `${item}`.length) result = `${item}`;
+    }
+    return result;
   }
 
   get times() {
@@ -54,21 +61,30 @@ class Timer extends React.Component {
   }
 
   renderTimes(times) {
-    const { activeIndex, className } = this.props;
+    const { disable, className, activeIndex } = this.props;
     const doms = times.map((time, index) => (
       <div
         key={index}
         onClick={this.onTimeChange(index)}
-        className={`time ${index === activeIndex ? 'timeActived' : ''} ${className}`}
+        style={{ minWidth: `${this.minWidth}px` }}
+        className={`time ${index === activeIndex ? 'timeActived' : ''} ${className} ${disable && 'disable'}`}
       >
         {time}
       </div>
     ));
     doms.unshift((
-      <div className={`time timePlaceholder ${className}`} key="placeholder-0" />
+      <div
+        key="placeholder-0"
+        style={{ minWidth: `${this.minWidth}px` }}
+        className="time timePlaceholder"
+      />
     ));
     doms.push((
-      <div className={`time timePlaceholder ${className}`} key={`placeholder-${times.length}`} />
+      <div
+        key={`placeholder-${times.length}`}
+        style={{ minWidth: `${this.minWidth}px` }}
+        className="time timePlaceholder"
+      />
     ));
     return doms;
   }
@@ -98,7 +114,7 @@ class Timer extends React.Component {
   }
 
   render() {
-    const { section, activeIndex } = this.props;
+    const { section, disable, activeIndex } = this.props;
     const { prefix, suffix } = section;
     const width = this.width;
 
@@ -117,6 +133,7 @@ class Timer extends React.Component {
           >
             <Scroller
               autoFrame
+              disable={disable}
               className="wrapper"
               centerIndex={activeIndex}
               onScroll={this.onScroll}

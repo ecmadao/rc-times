@@ -373,6 +373,7 @@ export default class Scroller extends Component {
 
   render() {
     const {
+      disable,
       children,
       autoScroll,
       className,
@@ -382,6 +383,7 @@ export default class Scroller extends Component {
     return (
       <ScrollerContainer>
         <ScrollerContent
+          disable={disable}
           centerindex={centerIndex}
           autoScroll={autoScroll}
           className={className}
