@@ -11,7 +11,7 @@ module.exports = {
         test: /\.jsx?$/,
         enforce: "pre",
         loader: "eslint-loader",
-        exclude: /node_modules/,
+        exclude: /(node_modules)/,
         include: SOURCE_PATH,
       },
       {

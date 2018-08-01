@@ -22,7 +22,6 @@
 .timePicker .container {
   height: calc(3 * var(--timerHeight));
   position: relative;
-  overflow-y: scroll;
   width: 100%;
 }
 
@@ -44,11 +43,10 @@
 }
 
 .timePicker .wrapper {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  z-index: 0;
-  transition: top 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.timePicker .wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .timePicker .time {
@@ -61,7 +59,9 @@
   align-items: center;
   user-select: none;
   color: #495057;
-  transition: transform 0.2s, opacity 0.2s, color 0.2s;
+  transform: scale(1);
+  font-weight: normal;
+  transition: transform 0.2s, opacity 0.2s, color 0.2s, font-weight 0.2s;
 }
 
 .timePicker .timePlaceholder {

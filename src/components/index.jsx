@@ -1,14 +1,14 @@
 
 import React from 'react';
-import cx from 'classnames';
 import { matchArray, timesCreator } from '../utils/helper';
 import Timer from './Timer';
 
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
+    const activeIndexs = props.sections.map(section => section.activeIndex || 0);
     this.state = {
-      activeIndexs: props.sections.map(section => section.activeIndex || 0)
+      activeIndexs
     };
     this.onTimeChange = this.onTimeChange.bind(this);
   }
@@ -18,28 +18,26 @@ class TimePicker extends React.Component {
     const { activeIndexs } = this.state;
     const tmp = activeIndexs.map(activeIndex => ({ activeIndex }));
     if (!matchArray(sections, tmp, 'activeIndex')) {
-      this.init(sections);
+      this.reinit(sections);
     }
   }
 
-  init(sections) {
+  reinit(sections) {
     this.setState({
       activeIndexs: sections.map(section => section.activeIndex || 0)
     });
   }
 
   onTimeChange(index) {
-    const { activeIndexs } = this.state;
     const { onTimeChange } = this.props;
     return (activeIndex) => {
+      const { activeIndexs } = this.state;
       const newIndexs = [
         ...activeIndexs.slice(0, index),
         activeIndex,
         ...activeIndexs.slice(index + 1)
       ];
-      this.setState({
-        activeIndexs: newIndexs
-      });
+      this.setState({ activeIndexs: newIndexs });
       onTimeChange && onTimeChange({
         indexs: newIndexs,
         values: this.getValues(newIndexs)
@@ -66,6 +64,7 @@ class TimePicker extends React.Component {
     return sections.map((section, index) => (
       <Timer
         key={index}
+        index={index}
         section={section}
         activeIndex={activeIndexs[index]}
         onTimeChange={this.onTimeChange(index)}
@@ -77,11 +76,7 @@ class TimePicker extends React.Component {
     const { color, className } = this.props;
     return (
       <div
-        className={cx(
-          'timePicker',
-          color ? `timePicker-${color}` : '',
-          className
-        )}
+        className={`timePicker ${color ? `timePicker-${color}` : ''} ${className}`}
       >
         {this.renderTimers()}
       </div>
