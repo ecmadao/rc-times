@@ -60,3 +60,26 @@ export const getDomProperty = (text, className = '') => {
     width: fontSize * text.length,
   };
 };
+
+export const debounce = (action, options = {}) => {
+  let timeout = null;
+  let funcArgs = [];
+  const { delay = 200, } = options;
+
+  const clean = () => {
+    timeout && clearTimeout(timeout);
+    timeout = null;
+  };
+  const exec = () => {
+    const args = funcArgs.pop();
+    funcArgs = [];
+    clean();
+    action(...args);
+  };
+
+  return (...args) => {
+    funcArgs.push(args);
+    clean();
+    timeout = setTimeout(exec, delay);
+  };
+};

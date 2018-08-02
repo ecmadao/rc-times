@@ -1,16 +1,15 @@
 
 import React from 'react';
-import { matchArray, timesCreator } from '../utils/helper';
+import { matchArray, timesCreator, debounce } from '../utils/helper';
 import Timer from './Timer';
 
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
     const activeIndexs = props.sections.map(section => section.activeIndex || 0);
-    this.state = {
-      activeIndexs
-    };
+    this.state = { activeIndexs };
     this.onTimeChange = this.onTimeChange.bind(this);
+    this.onTimeChangeProps = debounce(this.onTimeChangeProps.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +28,6 @@ class TimePicker extends React.Component {
   }
 
   onTimeChange(index) {
-    const { onTimeChange } = this.props;
     return (activeIndex) => {
       const { activeIndexs } = this.state;
       const newIndexs = [
@@ -38,11 +36,16 @@ class TimePicker extends React.Component {
         ...activeIndexs.slice(index + 1)
       ];
       this.setState({ activeIndexs: newIndexs });
-      onTimeChange && onTimeChange({
+      this.onTimeChangeProps({
         indexs: newIndexs,
         values: this.getValues(newIndexs)
       });
     };
+  }
+
+  onTimeChangeProps(options) {
+    const { onTimeChange } = this.props;
+    onTimeChange && onTimeChange(options);
   }
 
   getValues(indexs) {

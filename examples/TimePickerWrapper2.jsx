@@ -40,41 +40,6 @@ class TimePickerWrapper extends React.Component {
           </div>
         </div>
 
-        <div className="exampleColumn">
-          <div className="exampleRow">
-            <h3>With outside props to make it bigger</h3>
-            <div className="exampleColumn">
-              <div className="exampleRow">
-                <TimePicker
-                  sections={[
-                    {
-                      prefix: 'Every',
-                      times: ['Day', 'Week', 'Month', 'Quarter', 'Year'],
-                    }
-                  ]}
-                  color="yellow"
-                  padding={40}
-                  className="examplePicker"
-                  timerClassName="exampleTimer"
-                />
-              </div>
-              <div className="exampleSubText">at</div>
-              <div className="exampleRow exampleRowSub">
-                <TimePicker
-                  sections={[
-                    {
-                      from: 0,
-                      to: 12,
-                      suffix: 'Clock'
-                    }
-                  ]}
-                  color="yellow"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     );
   }

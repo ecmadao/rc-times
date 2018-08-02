@@ -7,44 +7,31 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.timer = null;
-    this.activedWidth = 50;
-    this.itemMinWidth = null;
-    this.actived = '';
+    this.minWidth = this.getMinWidth();
+    this.width = this.getWidth(this.longestItem);
+    this.widths = this.times.map(item => this.getWidth(`${item}`));
+
     this.onScroll = this.onScroll.bind(this);
     this.onScrollEnd = this.onScrollEnd.bind(this);
     this.onTimeChange = this.onTimeChange.bind(this);
     this.onActicedChange = this.onActicedChange.bind(this);
   }
 
-  get width() {
-    const activedTime = `${this.activedItem}`;
-    if (this.actived.length === activedTime.length) {
-      return this.activedWidth;
-    }
+  getWidth(text) {
     const { className } = this.props;
     const {
       width,
       margin,
       padding,
-    } = getDomProperty(activedTime, className);
+    } = getDomProperty(text, className);
 
-    this.activedWidth = width + margin + padding + this.props.padding;
-    return this.activedWidth;
+    return width + margin + padding + this.props.padding;
   }
 
-  get minWidth() {
-    if (this.itemMinWidth) return this.itemMinWidth;
+  getMinWidth() {
     const longestItem = this.longestItem;
     const { width } = getDomProperty(longestItem);
-
-    this.itemMinWidth = width;
-    return this.itemMinWidth;
-  }
-
-  get activedItem() {
-    const { activeIndex } = this.props;
-    return this.times[activeIndex];
+    return width;
   }
 
   get longestItem() {
@@ -66,7 +53,6 @@ class Timer extends React.Component {
       <div
         key={index}
         onClick={this.onTimeChange(index)}
-        style={{ minWidth: `${this.minWidth}px` }}
         className={`time ${index === activeIndex ? 'timeActived' : ''} ${className} ${disable && 'disable'}`}
       >
         {time}
@@ -75,14 +61,12 @@ class Timer extends React.Component {
     doms.unshift((
       <div
         key="placeholder-0"
-        style={{ minWidth: `${this.minWidth}px` }}
         className="time timePlaceholder"
       />
     ));
     doms.push((
       <div
         key={`placeholder-${times.length}`}
-        style={{ minWidth: `${this.minWidth}px` }}
         className="time timePlaceholder"
       />
     ));
@@ -116,7 +100,6 @@ class Timer extends React.Component {
   render() {
     const { section, disable, activeIndex } = this.props;
     const { prefix, suffix } = section;
-    const width = this.width;
 
     return (
       <div className="timer">
@@ -124,7 +107,7 @@ class Timer extends React.Component {
         <div
           className="scrollSection"
           style={{
-            width: `${width}px`
+            width: `${this.width}px`
           }}
         >
           <div
@@ -143,7 +126,10 @@ class Timer extends React.Component {
               {this.renderTimes(this.times)}
             </Scroller>
           </div>
-          <div className="timerWrapper" style={{ width: `${width - 2}px` }} />
+          <div
+            className="timerWrapper"
+            style={{ width: `${this.width - 2}px` }}
+          />
         </div>
         {suffix ? <div className="subText suffix">{suffix}</div> : null}
       </div>
