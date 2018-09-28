@@ -35,7 +35,7 @@ export const getCssNumberVariable = (key) => {
   let value = parseInt(cssVariable, 10);
 
   return isNaN(value) ? null : value;
-}
+};
 
 export const getDomProperty = (text, className = '') => {
   const hiddenDOM = document.createElement('div');
