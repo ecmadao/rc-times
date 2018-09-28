@@ -1,6 +1,10 @@
 
 import React from 'react';
-import { timesCreator, getDomProperty } from '../utils/helper';
+import {
+  timesCreator,
+  getDomProperty,
+  getCssNumberVariable,
+} from '../utils/helper';
 import Scroller from './lib/Scroller';
 
 class Timer extends React.Component {
@@ -9,6 +13,7 @@ class Timer extends React.Component {
 
     this.minWidth = this.getMinWidth();
     this.width = this.getWidth(this.longestItem);
+    this.height = this.getHeight();
     this.widths = this.times.map(item => this.getWidth(`${item}`));
 
     this.onScroll = this.onScroll.bind(this);
@@ -26,6 +31,10 @@ class Timer extends React.Component {
     } = getDomProperty(text, className);
 
     return width + margin + padding + this.props.padding;
+  }
+
+  getHeight() {
+    return getCssNumberVariable('--timerHeight') || 50;
   }
 
   getMinWidth() {
@@ -74,10 +83,12 @@ class Timer extends React.Component {
   }
 
   onActicedChange(position) {
-    const remain = position % 50;
+    const height = this.height;
+
+    const remain = position % height;
     const main = position - remain;
-    const last = remain >= 25 ? main + 50 : main;
-    const activeIndex = last / 50;
+    const last = remain >= (height / 2) ? main + height : main;
+    const activeIndex = last / height;
     const { onTimeChange } = this.props;
     onTimeChange && onTimeChange(activeIndex);
   }

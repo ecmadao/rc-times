@@ -1,4 +1,3 @@
-
 export const matchArray = (arrA, arrB, key) => {
   if (arrA.length !== arrB.length) return false;
   for (let i = 0; i < arrA.length; i += 1) {
@@ -28,6 +27,14 @@ export const timesCreator = (options = {}) => {
     results.push(i);
   }
   return results;
+};
+
+export const getCssNumberVariable = (key) => {
+  const root = getComputedStyle(document.documentElement);
+  const cssVariable = root.getPropertyValue(key).trim();
+  let value = parseInt(cssVariable, 10);
+
+  return isNaN(value) ? null : value;
 };
 
 export const getDomProperty = (text, className = '') => {
